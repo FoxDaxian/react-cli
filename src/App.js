@@ -1,39 +1,56 @@
 import React, { Component } from 'react'
-import {
-	BrowserRouter as Router,
-	Route,
-	Link
-} from 'react-router-dom'
+// import {
+// 	BrowserRouter as Router,
+// 	Route,
+// 	Link
+// } from 'react-router-dom'
+
 import '@/App.css'
 
-const view1 = () => (
-	<div>view1</div>
-	)
+import Header from '@/views/header'
 
-const view2 = () => (
-	<div>view2</div>
-	)
+import { connect } from 'react-redux'
 
-class App extends Component {
-	render() {
-		return (<div className="App">
-			<Router>
-				<div>
-					<ul>
-						<li>
-							<Link to="/view1">view1</Link>
-						</li>
-						<li>
-							<Link to="/view2">view2</Link>
-						</li>
-					</ul>
-					<hr/>
-					<Route path="/view1" component={view1} />
-					<Route path="/view2" component={view2} />
-				</div>
-			</Router>
-		</div>)
+import {
+	add_fn
+} from '@/store/actions'
+
+// 别嫌麻烦，先这样写着
+const mapDispatchToProps = (dispatch) => {//遍历dispatch到组件的props，以让组件调用
+	return {
+		add_fn: (text) => dispatch(add_fn(text))
 	}
 }
 
-export default App
+const mapStateToProps = state => {
+	return {
+		todos: state.todoReducer
+	}
+}
+
+
+
+class App extends Component {
+	render() {
+		const { todos } = this.props
+
+		return (<div className="App">
+			<Header></Header>
+			{todos.map((el, index) => {
+				return <li key={index}>{el.text}</li>
+			})}
+			<button onClick={this.addTodoList.bind(this)}>添加</button>
+		</div>)
+	}
+
+	addTodoList () {
+		this.props.add_fn('你好')
+	}
+}
+
+const Index = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App)
+
+export default Index
