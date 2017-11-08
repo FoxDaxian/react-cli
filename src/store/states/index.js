@@ -1,6 +1,6 @@
 // states
 
 export const todos = [{
-	text: 'react学习',
+	text: '复习react',
 	completed: false
 }]

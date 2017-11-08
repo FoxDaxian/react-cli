@@ -6,7 +6,7 @@ import {
 } from '@/store/states'
 
 import {
-	ADD_TODO
+	ADD_TODO, DEL_TODO, EDIT_TODO, TOG_TODO
 } from '@/store/types'
 
 const todoReducer = (state = todos, action) => {
@@ -16,6 +16,20 @@ const todoReducer = (state = todos, action) => {
 			text: action.text,
 			cmplete: false
 		}]
+		case DEL_TODO:
+		let temp = [...state]
+		temp.splice(action.index, 1)
+		return temp
+		case EDIT_TODO:
+		return state.map((item, index) => {
+			index === action.index && (item.text = action.text)
+			return item
+		})
+		case TOG_TODO:
+		return state.map((item, index) => {
+			index === action.index && (item.completed = !item.completed)
+			return item
+		})
 		default:
 		return state;
 	}

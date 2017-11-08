@@ -1,0 +1,51 @@
+.wrap{
+	:global{
+		.ant-col-20{
+			background-color: #5FBDED;
+			color: #fff;
+			font-size: 16px;
+			box-sizing: border-box;
+			padding: 8px;
+			border-bottom: 1px solid #c1c1c1;
+			.panel{
+				float: right;
+				position: relative;
+			}
+			.ant-btn:not(:last-of-type){
+				margin-right: 8px;
+			}
+			.editWrap{
+				background-color: #5FBDED;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				z-index: 10;
+				.ant-input{
+					width: 60%;
+				}
+				.ant-btn{
+					float: right;
+				}
+			}
+		}
+		.ant-col-18{
+			text-align: right;
+			background-color: #5FBDED;
+			color: #fff;
+			font-size: 16px;
+			box-sizing: border-box;
+			padding: 8px;
+		}
+		.ant-col-2{
+			text-align: right;
+			background-color: #5FBDED;
+			color: #fff;
+			font-size: 16px;
+			box-sizing: border-box;
+			padding: 8px;
+		}
+		.completed{
+			margin-left: 20px;
+		}
+	}
+}

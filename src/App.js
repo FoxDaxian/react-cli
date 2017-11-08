@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
-// import {
-// 	BrowserRouter as Router,
-// 	Route,
-// 	Link
-// } from 'react-router-dom'
+import {
+	BrowserRouter as Router,
+	Route
+} from 'react-router-dom'
 
 import '@/App.css'
 
 import Header from '@/views/header'
+import Home from '@/views/home'
 
 import { connect } from 'react-redux'
 
 import {
-	add_fn
+	addItem
 } from '@/store/actions'
 
 // 别嫌麻烦，先这样写着
 const mapDispatchToProps = (dispatch) => {//遍历dispatch到组件的props，以让组件调用
 	return {
-		add_fn: (text) => dispatch(add_fn(text))
+		add_fn: (text) => dispatch(addItem(text))
 	}
 }
 
@@ -36,6 +36,9 @@ class App extends Component {
 
 		return (<div className="App">
 			<Header></Header>
+			<Router>
+				<Route path="/" component={Home} />
+			</Router>
 			{todos.map((el, index) => {
 				return <li key={index}>{el.text}</li>
 			})}
