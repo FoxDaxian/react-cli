@@ -145,7 +145,9 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              
+              plugins: [
+                ['import', [{ libraryName: 'antd', style: 'css' }]]
+              ],
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
@@ -164,9 +166,7 @@ module.exports = {
               {
                 loader: require.resolve('css-loader'),
                 options: {
-                  importLoaders: 1,
-                  modules: true,
-                  localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                  importLoaders: 1
                 },
               },
               {
@@ -193,6 +193,7 @@ module.exports = {
           },
           {
             test: /\.scss$/,
+            include: [path.resolve(__dirname, "../src/")],
             use: [
               require.resolve('style-loader'),
               {

@@ -150,7 +150,9 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              
+              plugins: [
+                ['import', [{ libraryName: 'antd', style: 'css' }]]
+              ],
               compact: true,
             },
           },
@@ -183,9 +185,7 @@ module.exports = {
                       options: {
                         importLoaders: 1,
                         minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                        modules: true,
-                        localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                        sourceMap: shouldUseSourceMap
                       },
                     },
                     {
@@ -216,7 +216,8 @@ module.exports = {
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           {
-            test: /\.css$/,
+            test: /\.scss$/,
+            include: [path.resolve(__dirname, "../src/")],
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
