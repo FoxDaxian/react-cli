@@ -35,13 +35,8 @@ const todoReducer = (state = todos, action) => {
 	}
 }
 
-const temp = (state = todos, action) => {
+const temp = (state = {}, action) => {
 	switch (action.type) {
-		case ADD_TODO:
-		return [...state, {
-			text: action.text,
-			cmplete: false
-		}]
 		default:
 		return state;
 	}

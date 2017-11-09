@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import {
 	addItem, deleteItem, editItem, togItem
 } from '@/store/actions'
+
 const mapStateToProps = state => {
 	return {
 		todos: state.todoReducer
@@ -44,7 +45,6 @@ class TodoList extends Component {
 		}
 	}
 	render () {
-		// 从这里开始写
 		const { todos } = this.props
 		return (<Row className={scss.wrap}>
 			{
@@ -55,7 +55,7 @@ class TodoList extends Component {
 
 						<div className="panel">
 							<div className="editWrap" style={{display: this.state.uiState.toggleEdit ? 'block' : 'none'}} >
-								<Input placeholder="edit" value={this.state.editText} onChange={this.editTextFunc.bind(this)} />
+								<Input placeholder="edit" value={this.state.editText} onChange={this.editTextFunc.bind(this)} ref={input => this.editInput = input} />
 								<Button onClick={this.confirmEdit.bind(this, index)}>
 									<Icon type="check" />
 								</Button>
@@ -96,14 +96,16 @@ class TodoList extends Component {
 	}
 
 	confirmEdit (index) {
+		if (!this.state.editText) {
+			message.error('不能为空')
+			return
+		}
 		this.props.editItem(this.state.editText, index)
 		this.setState({
 			uiState: {
 				...this.state.uiState,
 				toggleEdit: !this.state.uiState.toggleEdit
-			}
-		})
-		this.setState({
+			},
 			editText: ''
 		})
 	}
@@ -114,7 +116,10 @@ class TodoList extends Component {
 				...this.state.uiState,
 				toggleEdit: !this.state.uiState.toggleEdit
 			}
+		}, () => {
+			this.editInput.refs.input.focus()
 		})
+
 	}
 
 	deleteItem (index) {
