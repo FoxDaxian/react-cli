@@ -54,7 +54,7 @@ class TodoList extends Component {
 						<Icon type={item.completed ? 'smile-o' : 'frown-o'} className="completed" style={{fontSize: '20px'}} />
 
 						<div className="panel">
-							<div className="editWrap" style={{display: this.state.uiState.toggleEdit ? 'block' : 'none'}} >
+							<div className="editWrap">
 								<Input placeholder="edit" value={this.state.editText} onChange={this.editTextFunc.bind(this)} ref={input => this.editInput = input} />
 								<Button onClick={this.confirmEdit.bind(this, index)}>
 									<Icon type="check" />
@@ -63,7 +63,7 @@ class TodoList extends Component {
 							<Button type="danger" onClick={this.deleteItem.bind(this, index)}>
 								<Icon type="minus-circle-o" />
 							</Button>
-							<Button onClick={this.toggleEdit.bind(this)}>
+							<Button onClick={this.toggleEdit.bind(this, index)}>
 								<Icon type="edit" />
 							</Button>
 							<Button onClick={this.togItem.bind(this, index)}>
@@ -100,25 +100,18 @@ class TodoList extends Component {
 			message.error('不能为空')
 			return
 		}
+		const todoItems = document.querySelectorAll(`.${ scss.wrap } .ant-col-20`)
 		this.props.editItem(this.state.editText, index)
+		todoItems[index].querySelector('.editWrap').style.display = 'none'
 		this.setState({
-			uiState: {
-				...this.state.uiState,
-				toggleEdit: !this.state.uiState.toggleEdit
-			},
 			editText: ''
 		})
 	}
 
-	toggleEdit () {
-		this.setState({
-			uiState: {
-				...this.state.uiState,
-				toggleEdit: !this.state.uiState.toggleEdit
-			}
-		}, () => {
-			this.editInput.refs.input.focus()
-		})
+	toggleEdit (index) {
+		const todoItems = document.querySelectorAll(`.${ scss.wrap } .ant-col-20`)
+		todoItems[index].querySelector('.editWrap').style.display = 'block'
+		this.editInput.refs.input.focus()
 
 	}
 
