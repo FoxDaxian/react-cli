@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// TODO react-routet，修改了提交首页方块不更新的问题
 import {
 	BrowserRouter as Router,
 	Route
