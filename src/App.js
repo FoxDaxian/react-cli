@@ -1,23 +1,39 @@
 import React, { Component } from 'react'
-// TODO react-routet，修改了提交首页方块不更新的问题
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import '@/App.css'
+import {observer} from 'mobx-react';
+// 双向绑定
 
-import Header from '@/views/header'
-import Home from '@/views/home'
-
+@observer
 class App extends Component {
+	constructor() {
+		super()
+		this.state = {
+			name: ['冯世雨', '朱丽']
+		}
+	}
+
 	render() {
+		console.log(this.props.appState.timer)
+		console.log(this.props.appState)
+		
+
 		return (
 			<div className="App">
-				<Header />
-				<Router>
-					<Route path="/" component={Home} />
-				</Router>
+				<h1>{this.props.appState.timer}</h1>
+				<h1>{this.props.appState.completeCount}</h1>
+				<button onClick={this.props.appState.add.bind(this)}>增加</button>
 			</div>
 		)
 	}
 }
+
+// 方法在下面写，类里面只写生命周期和render
+const sayName = function() {
+	console.log(this.state)
+}
+
+Object.assign(App.prototype, {
+	sayName
+})
 
 export default App
