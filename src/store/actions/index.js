@@ -11,7 +11,7 @@ export const addItem = text => {
 		type: ADD_TODO,
 		text,
 		complete: false
-	}	
+	}
 }
 
 export const deleteItem = index => {
@@ -32,5 +32,20 @@ export const togItem = (index) => {
 	return {
 		type: TOG_TODO,
 		index
+	}
+}
+
+export const test = function () {
+	return (dispatch, getState) => () => {
+		dispatch({
+			type: ADD_TODO,
+			text: 2,
+			complete: false
+		})
+		dispatch({
+			type: ADD_TODO,
+			text: 2,
+			complete: false
+		})
 	}
 }

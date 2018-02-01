@@ -1,39 +1,38 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import {observer} from 'mobx-react';
-// 双向绑定
+import { addItem, test } from './store/actions'
 
-@observer
 class App extends Component {
 	constructor() {
 		super()
-		this.state = {
-			name: ['冯世雨', '朱丽']
-		}
+		this.add = this.add.bind(this)
+	}
+	componentDidMount() {
+		console.log(this.props.test());
+	}
+
+	add() {
+		this.props.addItem('redux')
 	}
 
 	render() {
-		console.log(this.props.appState.timer)
-		console.log(this.props.appState)
-		
-
 		return (
 			<div className="App">
-				<h1>{this.props.appState.timer}</h1>
-				<h1>{this.props.appState.completeCount}</h1>
-				<button onClick={this.props.appState.add.bind(this)}>增加</button>
+				{this.props.todo.map((item, index) => <div key={index}>{item.text}</div>)}
+				<button onClick={this.add}>增加</button>
 			</div>
 		)
 	}
 }
 
-// 方法在下面写，类里面只写生命周期和render
-const sayName = function() {
-	console.log(this.state)
+const mapStateToProps = (state) => {
+	return {
+		todo: state.todoReducer
+	}
 }
 
-Object.assign(App.prototype, {
-	sayName
-})
-
-export default App
+export default connect(mapStateToProps, {
+	addItem,
+	test
+})(App)

@@ -3,13 +3,19 @@ import ReactDOM from 'react-dom';
 import '@/assets/normalize.css'
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import appState from '@/mobx/appState'
 
-// 实例化，然后注入
-const store = new appState()
+// redux
+import state from './store/reducers'
+import { applyMiddleware, createStore } from 'redux'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+
+const store = createStore(state, applyMiddleware(thunk))
 
 ReactDOM.render(
-	<App appState={store}/>,
+	<Provider store={store}>
+		<App />
+	</Provider>,
 	document.getElementById('root')
 )
 registerServiceWorker()
